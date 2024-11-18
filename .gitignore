@@ -1,0 +1,30 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+
+# Virtual environments
+.venv/
+env/
+venv/
+
+# Environment variables
+.env
+*.env
+
+# pytest cache
+.cache/
+
+# mypy cache
+.mypy_cache/
+
+# Editor backups and configs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# MacOS-specific
+.DS_Store
+
+# Windows-specific
+Thumbs.db

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% block head %}
+    <link href="{{ url_for('static', path='/styles.css') }}" rel="stylesheet">
+    <title>{% block title %}{% endblock %} - Video To ASCII Art</title>
+    {% endblock %}
+</head>
+
+<body>
+    <div id="content">{% block content %}{% endblock %}</div>
+    <footer id="footer">
+        {% block footer %}
+        <div name="">Made by <span>bug1422</span>
+        </div>
+        {% endblock %}
+    </footer>
+    {% block script %}
+    {% endblock %}
+</body>
+
+</html>

@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block title %}Homepage{% endblock %}
+{% block content %}
+<div class="title">
+    MP4 TO ASCII ART
+</div>
+<form id="homepage" method="post" action="/convert" enctype="multipart/form-data">
+    <div class="size">Select Font Size</div>
+    <input id="size" type="number" step=1 min=5 max=30 name="size" required>
+    <div class="upload-label">Select a MP4 video</div>
+    <div class="upload-container">
+        <div class="upload" id="upload">
+            <div>
+                <img src="{{ url_for('static', path='/upload.svg') }}" /><br>
+                <label for="img" id="img-label" class="file-label">Upload Or Drag In An Image</label>
+                <input type="file" id="img" name="image" accept="image/*"><br>
+            </div>
+        </div>
+    </div>
+    <button type="submit" class="button" id="submit">
+        Submit
+    </button>
+</form>
+{% endblock %}
+{% block script %}
+{{ super() }}
+<script>
+    const button = document.getElementById("submit")
+    const upload_field = document.getElementById("img")
+    const upload = document.getElementById("upload")
+    const name = document.getElementById("img-label")
+    submit.addEventListener('click', (e) => {
+        if (upload_field.files[0] == null) {
+            e.preventDefault()
+            alert("No image found")
+        }
+    })
+    upload.addEventListener("dragover", (e) => {
+        e.preventDefault()
+        upload.classList.add('dragover')
+    })
+    upload.addEventListener('dragleave', () => {
+        upload.classList.remove('dragover');
+    });
+    upload.addEventListener("drop", (e) => {
+        e.preventDefault()
+        upload.classList.remove('dragover')
+        if (e.dataTransfer.items) {
+            const item = e.dataTransfer.items[0]
+            if (item.kind == "file") {
+                const vid = item.getAsFile()
+                const dt = new DataTransfer()
+                dt.items.add(vid)
+                upload_field.files = dt.files
+                console.log(upload_field.files)
+                //trigger file change
+                const event = new Event('change', {
+                    'bubbles': true,
+                    'cancelable': true
+                })
+                upload_field.dispatchEvent(event)
+            }
+        }
+    })
+    upload.addEventListener("click", (e) => {
+        upload_field.click()
+    })
+
+    upload_field.addEventListener("change", (e) => {
+        const selected = e.target.files[0]
+        if (selected)
+            name.innerHTML = "Uploaded: " + selected.name
+    })
+</script>
+{% endblock %}
