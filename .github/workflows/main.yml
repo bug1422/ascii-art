@@ -28,11 +28,6 @@ jobs:
           --tag bug1422/ascii-fastapi:latest \
           --push .
 
-    - name: Run App
-      run: |
-        source .venv/bin/activate
-        uvicorn main:app --host 0.0.0.0 --port 8000
-    
     env:
       DOCKER_CLI_EXPERIMENTAL: enabled
       DOCKER_BUILDKIT: 0
