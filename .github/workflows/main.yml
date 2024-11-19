@@ -6,26 +6,32 @@ on:
     - main
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
 
     steps:
     - name: Checkout Repo
       uses: actions/checkout@v4
 
-    - name: Setup Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.11.4'
+    - name: Setup Docker Buildx
+      uses: docker/setup-buildx-action@v3
 
-    - name: Install Depends
+    - name: Login Docker Hub
+      run: echo ${{ secrets.DOCKERHUB_ACCESS_TOKEN }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+
+    - name: Build & Push Docker Image
       run: |
-        python -m venv .venv
-        source .venv/bin/activate
-        pip install --upgrade pip
-        pip install -r requirement.txt
+      docker buildx create --use
+      docker buildx build \
+        --file Dockerfile \
+        --tag bug1422/ascii-fastapi:latest \
+        --push .
 
     - name: Run App
       run: |
         source .venv/bin/activate
         uvicorn main:app --host 0.0.0.0 --port 8000
+    
+    env:
+      DOCKER_CLI_EXPERIMENTAL: enabled
+      DOCKER_BUILDKIT: 1
