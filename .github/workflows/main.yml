@@ -34,4 +34,4 @@ jobs:
     
     env:
       DOCKER_CLI_EXPERIMENTAL: enabled
-      DOCKER_BUILDKIT: 1
+      DOCKER_BUILDKIT: 0
