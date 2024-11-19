@@ -10,7 +10,7 @@ COPY . /app/
 
 EXPOSE 80
 
-ENV NAME ascii-art-converter
+ENV NAME=ascii-art-converter
 
 LABEL maintainer="bug1422 <thaiphamwang@gmail.com>"
 
