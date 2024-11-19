@@ -21,11 +21,11 @@ jobs:
 
     - name: Build & Push Docker Image
       run: |
-      docker buildx create --use
-      docker buildx build \
-        --file Dockerfile \
-        --tag bug1422/ascii-fastapi:latest \
-        --push .
+        docker buildx create --use
+        docker buildx build \
+          --file Dockerfile \
+          --tag bug1422/ascii-fastapi:latest \
+          --push .
 
     - name: Run App
       run: |
